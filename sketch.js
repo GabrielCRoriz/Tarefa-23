@@ -7,7 +7,11 @@ const Body = Matter.Body;
 var rectangle1
 var rectangle2
 var rectangle3
+
+//faltou criar variaveis de angulos para os outros objetos, pois cada um terá sua própria configuração 
 var angle = 60;
+var angle2 = 60;
+var angle3 = 60;
 
 function preload()
 {
@@ -22,10 +26,13 @@ function setup() {
 	world = engine.world;
     
 
-	var rectangle_options = { restitution:0.4, friction:0.02 }
-    rectangle1 = Bodies.rectangle(250, 200, 150, 20, rectangle_options)
-	rectangle2 = Bodies.rectangle(250, 200, 150, 20, rectangle_options)
-	rectangle3 = Bodies.rectangle(300, 250, 150, 20, options)
+	//faltou definir o objeto como estatico 
+	var rectangle_options = { isStatic: true, 
+				 estitution:0.4, friction:0.02 }
+	
+    	rectangle1 = Bodies.rectangle(250, 200, 150, 20, rectangle_options);
+	rectangle2 = Bodies.rectangle(250, 200, 150, 20, rectangle_options);
+	rectangle3 = Bodies.rectangle(300, 250, 150, 20, rectangle_options);
 
 	World.add(world, rectangle1)
 	World.add(world, rectangle2)
@@ -40,14 +47,22 @@ function draw() {
   rectMode(CENTER);
   background(0);
 
-  Matter.Body.rotate(rotator1,angle1)
 	push();
-	pop();
+	translate(rectangle1.position.x,rectangle1.position.y);
+	rotate(angle);
+	rect(0, 0, 150, 20);
+        pop();
 	angle1 +=0.2;
-	translate(rotator1.position.x,rotator1.position.y);
-	rotate(angle1);
-  rect(rectangle1.position.x, rectangle1.position.y, 150, 20)
-  rect(rectangle2.position.x, rectangle2.position.y, 150, 20)
+
+//agora é possível criar a configuração para os outros objetos sempre entre push() e pop(); para que cada um gire em torno do próprio eixo e em direções diferentes
+	push();
+	angle1 +=0.2;
+	translate(rectangle2.position.x,rectangle2.position.y);
+	rotate(angle2);
+	rect(0, 0, 150, 20);
+	pop();
+	angle2 -=0.5;
+
   rect(rectangle3.position.x, rectangle3.position.y, 150, 20)
   
   drawSprites();
